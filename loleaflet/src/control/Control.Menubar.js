@@ -180,8 +180,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Reset to Default Language'), id: 'resetparagraph', type: 'unocommand', uno: '.uno:LanguageStatus?Language:string=Paragraph_RESET_LANGUAGES'}]},
 				{name: _('Language for entire document'), type: 'menu', menu: [
 					{name: _('Reset to Default Language'), id: 'resetlanguage', type: 'unocommand', uno:'.uno:LanguageStatus?Language:string=Default_RESET_LANGUAGES'}]}
-				{name: _('Spelling and Grammar'), uno: '.uno:SpellingAndGrammarDialog', type: 'unocommand'},
-				{name: _('Word count'), uno: '.uno:WordCountDialog', type: 'unocommand'}
+				{name: _('Spelling and Grammar'), uno: '.uno:SpellingAndGrammarDialog', type: 'dialog'},
+				{name: _('Word count'), uno: '.uno:WordCountDialog', type: 'dialog'}
 			]},
 			{name: _('Help'), id: 'help', type: 'menu', menu: [
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action'},
@@ -753,6 +753,8 @@ L.Control.Menubar = L.Control.extend({
 			map.sendUnoCommand(unoCommand);
 		} else if (type === 'action') {
 			self._executeAction(item);
+		} else if (type === 'dialog') {
+			map.sendDialogCommand($(item).data('id'));
 		}
 
 		if ($(item).data('id') !== 'insertcomment')
@@ -832,6 +834,9 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'unocommand') {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
+			} else if (menu[i].type === 'dialog') {
+				$(aItem).data('type', 'dialog');
+				$(aItem).data('id', menu[i].id);
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {
