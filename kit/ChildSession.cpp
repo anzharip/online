@@ -824,7 +824,7 @@ bool ChildSession::dialogMouseEvent(const char* /*buffer*/, int /*length*/, cons
 
     std::unique_lock<std::mutex> lock(_docManager.getDocumentMutex());
 
-    getLOKitDocument()->postDialogMouseEvent(dialogId, type, x, y, count, buttons, modifier);
+    getLOKitDocument()->postDialogMouseEvent(dialogId.c_str(), type, x, y, count, buttons, modifier);
 
     return true;
 }
